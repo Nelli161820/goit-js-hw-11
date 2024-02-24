@@ -11,5 +11,7 @@ export function displayImages(images) {
     link.appendChild(img);
     gallery.appendChild(link);
   });
+  simpleLightbox.refresh();
   
 }
+

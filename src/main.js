@@ -11,10 +11,13 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 import { fetchImages } from './js/pixabay-api.js';
-import { displayImages} from './js/render-functions.js';
+import { displayImages } from './js/render-functions.js';
+
+
 
 document.getElementById('searchForm').addEventListener('submit', function (e) {
   e.preventDefault();
+  
   const searchQuery = document.getElementById('searchInput').value.trim();
   if (searchQuery) {
     
@@ -37,6 +40,12 @@ function displayError() {
       'Sorry, there are no images matching your search query. Please try again!',
   });
 }
+function clearGallery() {
+  let gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
+  
+}
+clearGallery();
 
 // Функція для створення картки зображення
 function createImageCard(image) {
@@ -49,6 +58,7 @@ function createImageCard(image) {
     <p>Comments: ${image.comments}</p>
     <p>Downloads: ${image.downloads}</p>`;
   return card;
+  
 }
 
 
@@ -56,17 +66,19 @@ function createImageCard(image) {
 // Додавання нових карток зображень до галереї
 function addImagesToGallery(images) {
   let gallery = document.querySelector('.gallery');
-  images.forEach(image => {
-    let card = createImageCard(image);
-    gallery.appendChild(card);
-  });
+  let htmlString = images.map(image => createImageCard(image)).join('');
+  gallery.innerHTML = htmlString;
 }
+  
+
+
 
 // Пошук зображень за новим ключовим словом
 function searchImages(query) {
-  clearGallery();
+  
   fetchImages(query).then(addImagesToGallery);
 }
+searchImages();
 
 // Функція для показу індикатора завантаження
 function showLoader() {
