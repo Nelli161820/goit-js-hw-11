@@ -1,17 +1,26 @@
-export function displayImages(images) {
-  let gallery = document.getElementById('gallery');
-  gallery.innerHTML = ''; // Очистити HTML вміст галереї
-  images.forEach(image => {
-    const link = document.createElement('a');
-    link.href = image.largeImageURL;
-    const img = document.createElement('img');
-    img.src = image.webformatURL;
-    img.alt = image.tags;
-    img.classList.add('image');
-    link.appendChild(img);
-    gallery.appendChild(link);
-  });
-  simpleLightbox.refresh();
+export function showGallery(data)
+{
+  const galleryBox = data.hits.map(data =>
+        `<li class="image-search">
+        <a href="${data.largeImageURL}">
+        <img class="gallery-image" src="${data.webformatURL}" alt="${data.tags}"/>
+        </a>
+        <ul class="gallery-image">
+          <li class="image-items">
+            <p class="image-info"><span class="text">Likes</span>${data.likes}</p>
+            <p class="image-info"><span class="text">Views</span>${data.views}</p>
+            <p class="image-info"><span class="text">Comments</span>${data.comments}</p>
+            <p class="image-info"><span class="text">Downloads</span>${data.downloads}</p>
+          </li>
+        </ul>
+      </li>`);
+  
+  
+  
+  return galleryBox.join('');
+
+  
   
 }
+
 
