@@ -28,7 +28,7 @@ export function fetchPhotos(search) {
     .catch(error => {
           console.error('Error', error);
     });
-}
+};
 
 
 

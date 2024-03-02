@@ -17,8 +17,6 @@ import { createMarkup } from './js/render-functions.js';
 
 const searchForm = document.querySelector('.searchForm');
 const gallery = document.querySelector('.gallery');
-const search = document.querySelector("search")
-const searchInput = document.querySelector('.searchInput');
 const lightbox = new SimpleLightbox('.gallery a', {
   nav: true,
   captions: true,
