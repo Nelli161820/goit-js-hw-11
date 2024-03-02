@@ -1,11 +1,13 @@
-export function showGallery(data)
+export function createMarkup(data)
 {
-  const galleryBox = data.hits.map(data =>
+  return data.hits
+    .map(
+      data =>
         `<li class="image-search">
-        <a href="${data.largeImageURL}">
+        <a class="gallery-link" href="${data.largeImageURL}">
         <img class="gallery-image" src="${data.webformatURL}" alt="${data.tags}"/>
         </a>
-        <ul class="gallery-image">
+        <ul class="gallery-image-info">
           <li class="image-items">
             <p class="image-info"><span class="text">Likes</span>${data.likes}</p>
             <p class="image-info"><span class="text">Views</span>${data.views}</p>
@@ -13,14 +15,9 @@ export function showGallery(data)
             <p class="image-info"><span class="text">Downloads</span>${data.downloads}</p>
           </li>
         </ul>
-      </li>`);
-  
-  
-  
-  return galleryBox.join('');
-
-  
-  
+      </li>`
+    )
+    .join('');
 }
 
 

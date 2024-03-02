@@ -10,16 +10,21 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 
-import { fetchUser } from './js/pixabay-api.js';
-import { showGallery } from './js/render-functions.js';
+import { fetchPhotos } from './js/pixabay-api.js';
+import { createMarkup } from './js/render-functions.js';
 
 
 
 const searchForm = document.querySelector('.searchForm');
 const gallery = document.querySelector('.gallery');
 const search = document.querySelector("search")
-let searchInput = document.querySelector('.searchInput');
-const lightbox = new SimpleLightbox('.gallery a');
+const searchInput = document.querySelector('.searchInput');
+const lightbox = new SimpleLightbox('.gallery a', {
+  nav: true,
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 150,
+});
 const loader = document.querySelector('.loader');
 
 searchForm.addEventListener('submit', e => {
@@ -27,18 +32,29 @@ searchForm.addEventListener('submit', e => {
   console.log(searchForm.elements.search.value);
   const search = searchForm.elements.search.value;
   gallery.innerHTML = '';
-if (search === '') {
-    
+  loader.style.display = 'block';
+  if (search === '') {
     iziToast.error({
       title: 'Error',
       message: 'Please enter a search query.',
     });
     return;
-  }
+  };
+  
 
-  fetchUser(search).then(showGallery);
+  fetchPhotos(search)
+    .then(res => {
+      console.log(res);
+      gallery.innerHTML = createMarkup(res);
+      lightbox.refresh();
+    })
+    .then(data => {
+      loader.style.display = 'none';
+    })
+    .catch(error => {
+      console.error('Error fetching data!', error);
+    });
+   
   searchForm.reset();
-  
-    
-})
-  
+});
+
